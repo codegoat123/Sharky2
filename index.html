@@ -9,8 +9,13 @@
   </style>
 </head>
 <body>
+  <!-- Three.js core -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+
+  <!-- GLTFLoader and DRACOLoader -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/examples/js/loaders/DRACOLoader.js"></script>
+
   <script>
     let scene, camera, renderer, tralalerito, keys = {};
     const speed = 0.05;
@@ -43,7 +48,11 @@
       scene.add(ground);
 
       const loader = new THREE.GLTFLoader();
-      loader.load('scene.bin', function (gltf) {
+      const dracoLoader = new THREE.DRACOLoader();
+      dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+      loader.setDRACOLoader(dracoLoader);
+
+      loader.load('tralalerito.glb', function (gltf) {
         tralalerito = gltf.scene;
         tralalerito.scale.set(1, 1, 1);
         tralalerito.position.set(0, 0, 0);
