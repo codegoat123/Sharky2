@@ -40,7 +40,16 @@ loader.load(
 // Renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById("container3D").appendChild(renderer.domElement);
+
+// Wait for DOM to be ready before appending
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("container3D");
+  if (container) {
+    container.appendChild(renderer.domElement);
+  } else {
+    console.error("container3D not found in DOM");
+  }
+});
 
 // Camera position
 camera.position.z = 500;
@@ -61,7 +70,6 @@ controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
   requestAnimationFrame(animate);
 
-  // Optional: make Tralalerito react to mouse
   if (object) {
     object.rotation.y = -3 + mouseX / window.innerWidth * 3;
     object.rotation.x = -1.2 + mouseY * 2.5 / window.innerHeight;
